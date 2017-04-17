@@ -1,5 +1,7 @@
 package org.joyofcoding.objectcalisthenics;
 
+import java.util.List;
+
 public class Item {
     private String itemName;
     private SellIn sellIn;
@@ -12,55 +14,69 @@ public class Item {
     }
 
     public void updateQuality() {
-        if (!itemName.equals("Aged Brie")
-                && !itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
-                if (quality.getQuality() > 0) {
+        firstQualityCheck();
+        secondQualityCheck();
+        thirdQualityCheck();
+    }
+
+    private void firstQualityCheck() {
+        if (!equalsItemName("Aged Brie")
+                && !equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+            if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
+                if (quality.greaterThen(0)) {
                     quality.minusQuality(1);
                 }
             }
         } else {
-            if (quality.getQuality() < 50) {
+            if (quality.lessThen(50)) {
                 quality.addQuality(1);
 
-                if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (sellIn.getSellIn() < 11) {
-                        if (quality.getQuality() < 50) {
+                if (equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+                    if (sellIn.lessThen(11)) {
+                        if (quality.lessThen(50)) {
                             quality.addQuality(1);
                         }
                     }
 
-                    if (sellIn.getSellIn() < 6) {
-                        if (quality.getQuality() < 50) {
+                    if (sellIn.lessThen(6)) {
+                        if (quality.lessThen(50)) {
                             quality.addQuality(1);
                         }
                     }
                 }
             }
         }
+    }
 
-        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
+    private void secondQualityCheck() {
+        if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
             sellIn.minusSellIn(1);
         }
+    }
 
-        if (sellIn.getSellIn() < 0) {
-            if (!itemName.equals("Aged Brie")) {
-                if (!itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (quality.getQuality() > 0) {
-                        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
+    private void thirdQualityCheck() {
+        if (sellIn.lessThen(0)) {
+            if (quality.greaterThen(0)) {
+                if (!equalsItemName("Aged Brie")) {
+                    if (!equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
                             quality.minusQuality(1);
                         }
+                    } else {
+                        quality.minusQuality(
+                                quality.getQuality());
                     }
                 } else {
-                    quality.minusQuality(
-                            quality.getQuality());
-                }
-            } else {
-                if (quality.getQuality() < 50) {
-                    quality.addQuality(1);
+                    if (quality.lessThen(50)) {
+                        quality.addQuality(1);
+                    }
                 }
             }
         }
+    }
+
+    public boolean equalsItemName(String inputToCompare){
+        return itemName.equals(inputToCompare);
     }
 
     public String getName() {

@@ -10,6 +10,18 @@ public class SellIn {
         sellIn = sellInConstructor;
     }
 
+    public boolean lessThen(int lessThen){
+        if(sellIn < lessThen){
+            return true;
+        }
+        return false;
+    }
+
+    public void minusSellIn(int sellInToMinus){
+        sellIn = sellIn - sellInToMinus;
+    }
+
+
     public int getSellIn() {
         return sellIn;
     }
@@ -17,9 +29,4 @@ public class SellIn {
     public void setSellIn(int sellIn) {
         this.sellIn = sellIn;
     }
-
-    public void minusSellIn(int sellInToMinus){
-        sellIn = sellIn - sellInToMinus;
-    }
-
 }
