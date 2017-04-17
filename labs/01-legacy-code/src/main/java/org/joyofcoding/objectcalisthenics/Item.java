@@ -1,7 +1,5 @@
 package org.joyofcoding.objectcalisthenics;
 
-import java.util.List;
-
 public class Item {
     private String itemName;
     private SellIn sellIn;
@@ -14,69 +12,77 @@ public class Item {
     }
 
     public void updateQuality() {
-        firstQualityCheck();
-        secondQualityCheck();
-        thirdQualityCheck();
+        firstQualityUpdate();
+        secondQualityUpdate();
+        thirdQualityUpdate();
     }
 
-    private void firstQualityCheck() {
-        if (!equalsItemName("Aged Brie")
-                && !equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+    private void firstQualityUpdate() {
+        if (equalsItemName("Aged Brie")
+                || equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+            if (quality.lessThen(50)) {
+                quality.addQuality(1);
+
+                if (equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+                    addQualityOnSellIn();
+                }
+            }
+        } else {
             if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
                 if (quality.greaterThen(0)) {
                     quality.minusQuality(1);
                 }
             }
-        } else {
-            if (quality.lessThen(50)) {
-                quality.addQuality(1);
-
-                if (equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (sellIn.lessThen(11)) {
-                        if (quality.lessThen(50)) {
-                            quality.addQuality(1);
-                        }
-                    }
-
-                    if (sellIn.lessThen(6)) {
-                        if (quality.lessThen(50)) {
-                            quality.addQuality(1);
-                        }
-                    }
-                }
-            }
         }
     }
 
-    private void secondQualityCheck() {
+    private void secondQualityUpdate() {
         if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
             sellIn.minusSellIn(1);
         }
     }
 
-    private void thirdQualityCheck() {
+    private void thirdQualityUpdate() {
         if (sellIn.lessThen(0)) {
-            if (quality.greaterThen(0)) {
-                if (!equalsItemName("Aged Brie")) {
-                    if (!equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
-                            quality.minusQuality(1);
-                        }
-                    } else {
-                        quality.minusQuality(
-                                quality.getQuality());
-                    }
-                } else {
-                    if (quality.lessThen(50)) {
-                        quality.addQuality(1);
-                    }
-                }
+            if (quality.greaterThen(0)
+                    && quality.lessThen(50)) {
+                quality.addQuality(1);
+                minusQualityOnItemName();
             }
         }
     }
 
     public boolean equalsItemName(String inputToCompare){
         return itemName.equals(inputToCompare);
+    }
+
+    private void addQualityOnSellIn() {
+        if (sellIn.lessThen(11)) {
+            if (quality.lessThen(50)) {
+                quality.addQuality(1);
+            }
+        }
+
+        if (sellIn.lessThen(6)) {
+            if (quality.lessThen(50)) {
+                quality.addQuality(1);
+            }
+        }
+    }
+
+    private void minusQualityOnItemName() {
+        if (!equalsItemName("Aged Brie")) {
+            quality.minusQuality(1);
+
+            if (!equalsItemName("Backstage passes to a TAFKAL80ETC concert")) {
+                if (!equalsItemName("Sulfuras, Hand of Ragnaros")) {
+                    quality.minusQuality(1);
+                }
+            } else {
+                quality.minusQuality(
+                        quality.getQuality());
+            }
+        }
     }
 
     public String getName() {
