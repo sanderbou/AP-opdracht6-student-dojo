@@ -30,10 +30,10 @@ public class ItemsAssert extends AbstractIterableAssert<ItemsAssert, Iterable<It
         return this;
     }
 
-    public ItemsAssert containsOnlyItemQualities(Quality... qualities) {
+    public ItemsAssert containsOnlyItemQualities(Integer... qualities) {
         isNotNull();
 
-        Iterable<Quality> actualItemQualities = extractProperty("quality", Quality.class)
+        Iterable<Integer> actualItemQualities = extractProperty("quality", Integer.class)
                 .from(actual);
         Assertions.assertThat(actualItemQualities).containsOnly(qualities);
 

@@ -2,6 +2,8 @@ package com.bol.customerservice.jdbi;
 
 import com.bol.customerservice.api.Customer;
 
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,14 +15,20 @@ public class CustomerDao {
 
     public CustomerDao() {
         initializeStubCustomers();
+        writeStubCustomersToFile(customers);
     }
 
-    private void initializeStubCustomers() {
+    private void initializeStubCustomers()  {
         customers.add(new Customer(100000L, "Mario", "Mario", "mario@mario.com"));
         customers.add(new Customer(300005L, "Luigi", "Mario", "luigi@mario.com"));
         customers.add(new Customer(500015L, "Princess", "Peaches", "princesspeachconspiracy@nintendo.com"));
         customers.add(new Customer(700020L, "Bob", "Saget", "icantgetnosleep@faithless.com"));
         customers.add(new Customer(900025L, "Meg", "Ryan", "sleeplessin@seattle.com"));
+    }
+
+    public void writeStubCustomersToFile(List<Customer> customers){
+        for(Customer customer : customers)
+            customer.writeCustomerToFile();
     }
 
     public Optional<Customer> getCustomer(Long customerNumber) {

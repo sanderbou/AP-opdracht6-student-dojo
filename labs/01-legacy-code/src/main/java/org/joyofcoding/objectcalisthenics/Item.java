@@ -1,36 +1,36 @@
 package org.joyofcoding.objectcalisthenics;
 
 public class Item {
-    private String name;
-    private int sellIn;
+    private String itemName;
+    private SellIn sellIn;
     private Quality quality;
 
-    public Item(String name, int sellIn, Quality quality) {
-        this.name = name;
+    public Item(String itemName, SellIn sellIn, Quality quality) {
+        this.itemName = itemName;
         this.quality = quality;
         this.sellIn = sellIn;
     }
 
     public void updateQuality() {
-        if (!name.equals("Aged Brie")
-                && !name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if (quality.getQuality() > 0) {
-                if (!name.equals("Sulfuras, Hand of Ragnaros")) {
-                    quality.addQuality(1);
+        if (!itemName.equals("Aged Brie")
+                && !itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
+                if (quality.getQuality() > 0) {
+                    quality.minusQuality(1);
                 }
             }
         } else {
             if (quality.getQuality() < 50) {
                 quality.addQuality(1);
 
-                if (name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (sellIn < 11) {
+                if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                    if (sellIn.getSellIn() < 11) {
                         if (quality.getQuality() < 50) {
                             quality.addQuality(1);
                         }
                     }
 
-                    if (sellIn < 6) {
+                    if (sellIn.getSellIn() < 6) {
                         if (quality.getQuality() < 50) {
                             quality.addQuality(1);
                         }
@@ -39,15 +39,15 @@ public class Item {
             }
         }
 
-        if (!name.equals("Sulfuras, Hand of Ragnaros")) {
-            sellIn = sellIn - 1;
+        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
+            sellIn.minusSellIn(1);
         }
 
-        if (sellIn < 0) {
-            if (!name.equals("Aged Brie")) {
-                if (!name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (sellIn.getSellIn() < 0) {
+            if (!itemName.equals("Aged Brie")) {
+                if (!itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
                     if (quality.getQuality() > 0) {
-                        if (!name.equals("Sulfuras, Hand of Ragnaros")) {
+                        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
                             quality.minusQuality(1);
                         }
                     }
@@ -64,14 +64,14 @@ public class Item {
     }
 
     public String getName() {
-        return name;
+        return itemName;
     }
 
-    public Quality getQuality() {
-        return quality;
+    public int getQuality() {
+        return quality.getQuality();
     }
 
     public int getSellIn() {
-        return sellIn;
+        return sellIn.getSellIn();
     }
 }

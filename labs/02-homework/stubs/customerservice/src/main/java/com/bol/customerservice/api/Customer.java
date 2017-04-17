@@ -1,5 +1,7 @@
 package com.bol.customerservice.api;
 
+import java.io.RandomAccessFile;
+
 public class Customer {
     private final Long customerNumber;
     private final String firstName, lastName, emailAddress;
@@ -25,5 +27,14 @@ public class Customer {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public void writeCustomerToFile(){
+        try {
+            RandomAccessFile raf = new RandomAccessFile("service.db", "rw");
+            raf.writeChars(this.toString());
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -11,6 +11,10 @@ public class Quality {
         return quality;
     }
 
+    public void setQuality(int quality){
+        this.quality = quality;
+    }
+
     public void addQuality(int qualityToAdd){
         quality = quality + qualityToAdd;
     }
